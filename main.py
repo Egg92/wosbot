@@ -648,6 +648,11 @@ if __name__ == "__main__":
             return False
     
     async def check_and_update_files():
+        # 如果環境變數要求不自動更新，直接跳過更新流程
+        if os.getenv("AUTO_UPDATE", "").strip().lower() == "n":
+            print(F.YELLOW + "AUTO_UPDATE=n -> Skipping update check." + R)
+            return
+
         beta_mode = "--beta" in sys.argv
         repair_mode = "--repair" in sys.argv
         release_info = get_latest_release_info(beta_mode=beta_mode)
