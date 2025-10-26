@@ -1,6 +1,6 @@
 # Whiteout Survival Discord Bot
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/你的帳號/bot&plugins=mongodb&envs=DISCORD_TOKEN,CLIENT_ID,GUILD_ID,TZ,LOCALE,MONGODB_URI&DISCORD_TOKENDesc=Discord%20Bot%20Token&CLIENT_IDDesc=Discord%20Application%20ID&GUILD_IDDesc=%28Optional%29%20Dev%20Server%20ID&TZDesc=Timezone%20e.g.%20Asia%2FTaipei&LOCALEDesc=Locale%20e.g.%20zh-TW&MONGODB_URIDesc=MongoDB%20connection%20string)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Egg92/wosbot&plugins=mongodb&envs=DISCORD_TOKEN,CLIENT_ID,GUILD_ID,TZ,LOCALE,MONGODB_URI&DISCORD_TOKENDesc=Discord%20Bot%20Token&CLIENT_IDDesc=Discord%20Application%20ID&GUILD_IDDesc=%28Optional%29%20Dev%20Server%20ID&TZDesc=Timezone%20e.g.%20Asia%2FTaipei&LOCALEDesc=Locale%20e.g.%20zh-TW&MONGODB_URIDesc=MongoDB%20connection%20string)
 
 ---
 
