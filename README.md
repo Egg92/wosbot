@@ -26,6 +26,7 @@
 | `LOCALE` | 語系，例如 `zh-TW` |
 | `MONGODB_URI` | MongoDB 連線字串（Railway 會自動填） |
 
+---
 
 Whiteout Survival Discord Bot that supports alliance management, event reminders and attendance tracking, gift code redemption, minister appointment planning and more. This bot is free, open source and self-hosted.
 
