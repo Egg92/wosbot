@@ -1,33 +1,5 @@
 # Whiteout Survival Discord Bot
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Egg92/wosbot&plugins=mongodb&envs=DISCORD_TOKEN,CLIENT_ID,GUILD_ID,TZ,LOCALE,MONGODB_URI&DISCORD_TOKENDesc=Discord%20Bot%20Token&CLIENT_IDDesc=Discord%20Application%20ID&GUILD_IDDesc=(Optional)%20Dev%20Server%20ID&TZDesc=Timezone%20e.g.%20Asia/Taipei&LOCALEDesc=Locale%20e.g.%20zh-TW&MONGODB_URIDesc=MongoDB%20connection%20string)
-
----
-
-### 🚀 一鍵部署說明
-
-1. 按上面的 **「Deploy on Railway」** 按鈕。
-2. 登入 Railway（用 GitHub 帳號登入即可）。
-3. Railway 會自動：
-   - 複製這個倉庫代碼  
-   - 幫你建立 MongoDB 外掛  
-   - 提示你輸入環境變數（`DISCORD_TOKEN`、`CLIENT_ID`、`GUILD_ID`、`TZ`、`LOCALE`）  
-4. 部署完成後，Bot 就會自動上線 🎉
-
----
-
-### 🧾 必填環境變數
-| 變數名稱 | 說明 |
-|-----------|------|
-| `DISCORD_TOKEN` | 你的 Discord Bot Token |
-| `CLIENT_ID` | Discord Application ID |
-| `GUILD_ID` | Discord 測試伺服器 ID（可選） |
-| `TZ` | 時區，例如 `Asia/Taipei` |
-| `LOCALE` | 語系，例如 `zh-TW` |
-| `MONGODB_URI` | MongoDB 連線字串（Railway 會自動填） |
-
----
-
 Whiteout Survival Discord Bot that supports alliance management, event reminders and attendance tracking, gift code redemption, minister appointment planning and more. This bot is free, open source and self-hosted.
 
 **This is the actively maintained and improved version of the original bot that was created and soon abandoned by Reloisback.**
