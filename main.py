@@ -684,18 +684,22 @@ if __name__ == "__main__":
                 print()
                 
                 update = False
-                
-                if not is_container():
-                    if "--autoupdate" in sys.argv or repair_mode:
-                        update = True
-                    else:
-                        print("Note: If your terminal is not interactive, you can use the --autoupdate argument to skip this prompt.")
-                        ask = input("Do you want to update? (y/n): ").strip().lower()
-                        update = ask == "y"
-                else:
-                    print(F.YELLOW + "Running in a container. Skipping update prompt." + R)
+
+                # <<< 修改：在非互動/容器環境或 AUTO_UPDATE=y 時，自動更新；避免 input() >>>
+                auto_update_env = os.getenv("AUTO_UPDATE", "").strip().lower()
+                non_interactive = not sys.stdin or not sys.stdin.isatty()
+
+                if "--autoupdate" in sys.argv or repair_mode or auto_update_env == "y":
                     update = True
-                    
+                elif is_container() or non_interactive:
+                    print(F.YELLOW + "Non-interactive/container environment detected. Skipping update prompt and proceeding with update." + R)
+                    update = True
+                else:
+                    print("Note: If your terminal is not interactive, you can set AUTO_UPDATE=y or use the --autoupdate argument to skip this prompt.")
+                    ask = input("Do you want to update? (y/n): ").strip().lower()
+                    update = ask == "y"
+                # >>> 修改結束 <<<
+
                 if update:
                     # Backup requirements.txt for dependency comparison
                     if os.path.exists("requirements.txt"):
@@ -901,14 +905,19 @@ if __name__ == "__main__":
 
     init(autoreset=True)
 
-    token_file = "bot_token.txt"
-    if not os.path.exists(token_file):
-        bot_token = input("Enter the bot token: ")
-        with open(token_file, "w") as f:
-            f.write(bot_token)
-    else:
-        with open(token_file, "r") as f:
-            bot_token = f.read().strip()
+    # --- Token 讀取：先讀環境變數，沒有再讀檔；雲端避免使用 input() ---
+    bot_token = os.getenv("DISCORD_TOKEN", "").strip()
+
+    if not bot_token:
+        token_file = "bot_token.txt"
+        if os.path.exists(token_file):
+            with open(token_file, "r") as f:
+                bot_token = f.read().strip()
+
+    if not bot_token:
+        print(F.RED + "ERROR: Missing Discord token. Please set DISCORD_TOKEN in environment variables (Railway Variables)." + R)
+        sys.exit(1)
+    # --- end Token 讀取 ---
 
     if not os.path.exists("db"):
         os.makedirs("db")
@@ -1021,13 +1030,26 @@ if __name__ == "__main__":
     async def on_ready():
         try:
             print(f"{F.GREEN}Logged in as {F.CYAN}{bot.user}{R}")
-            await bot.tree.sync()
+
+            # 支援多個 Guild：環境變數 GUILD_IDS=123,456,789（逗號分隔）
+            # 若只填單一 GUILD_ID 也會被解析；皆未填則做全域註冊
+            guild_ids_env = os.getenv("GUILD_IDS") or os.getenv("GUILD_ID", "")
+            guilds = [discord.Object(id=int(g.strip()))
+                      for g in guild_ids_env.split(",") if g.strip()]
+
+            if guilds:
+                for g in guilds:
+                    synced = await bot.tree.sync(guild=g)
+                    print(f"[slash] synced {len(synced)} commands to guild {g.id}")
+            else:
+                synced = await bot.tree.sync()
+                print(f"[slash] globally synced {len(synced)} commands")
+
         except Exception as e:
             print(f"Error syncing commands: {e}")
 
     async def main():
         await load_cogs()
-        
         await bot.start(bot_token)
 
     if __name__ == "__main__":
