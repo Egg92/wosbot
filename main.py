@@ -908,6 +908,10 @@ if __name__ == "__main__":
 
     bot = CustomBot(command_prefix="/", intents=intents)
 
+    @bot.tree.command(name="ping", description="Test slash command")
+    async def ping(interaction: discord.Interaction):
+        await interaction.response.send_message("pong", ephemeral=True)
+
     init(autoreset=True)
 
     # --- Token 讀取：先讀環境變數，沒有再讀檔；雲端避免使用 input() ---
